@@ -1,0 +1,12 @@
+package Kodlama.io.Devs.kodlamaIoDevs.entities.concretes;
+
+public class Language {
+	private int id;
+	private String name;
+	
+	
+	public Language() {
+	}
+	
+	
+}
