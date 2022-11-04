@@ -1,0 +1,5 @@
+package Kodlama.io.Devs.kodlamaIoDevs.business.requests.technology;
+
+public class DeleteTechnology {
+
+}

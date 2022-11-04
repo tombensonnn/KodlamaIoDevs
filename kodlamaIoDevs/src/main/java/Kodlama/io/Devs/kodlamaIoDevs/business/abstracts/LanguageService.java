@@ -2,12 +2,17 @@ package Kodlama.io.Devs.kodlamaIoDevs.business.abstracts;
 
 import java.util.List;
 
+import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.CreateLanguageRequest;
+import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetAllLanguagesResponse;
+import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetByIdLanguageResponse;
 import Kodlama.io.Devs.kodlamaIoDevs.entities.concretes.Language;
 
 public interface LanguageService {
-	List<Language> getAll();
-	Language getById(int id);
-	void add(Language language) throws Exception;
-	void update(int id, Language language);
+	List<GetAllLanguagesResponse> getAll();
+	GetByIdLanguageResponse getById(int id);
+	Language getLanguageById(int id);
+	void add(CreateLanguageRequest languageRequest) throws Exception;
+	void update(int id, UpdateLanguageRequest updateRequest);
 	void delete(int id);
 }

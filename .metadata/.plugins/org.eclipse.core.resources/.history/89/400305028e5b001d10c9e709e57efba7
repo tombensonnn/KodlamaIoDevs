@@ -1,0 +1,40 @@
+package Kodlama.io.Devs.kodlamaIoDevs.business.concretes;
+
+import java.util.List;
+
+import Kodlama.io.Devs.kodlamaIoDevs.business.abstracts.TechnologyService;
+import Kodlama.io.Devs.kodlamaIoDevs.entities.concretes.Technology;
+
+public class TechnologyManager implements TechnologyService {
+
+	@Override
+	public List<Technology> getAll() {
+		
+		return null;
+	}
+
+	@Override
+	public Technology getById(int id) {
+		
+		return null;
+	}
+
+	@Override
+	public void add(Technology language) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(int id, Technology language) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

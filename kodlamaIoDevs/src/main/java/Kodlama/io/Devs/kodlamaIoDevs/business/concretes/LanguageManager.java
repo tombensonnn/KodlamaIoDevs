@@ -1,11 +1,16 @@
 package Kodlama.io.Devs.kodlamaIoDevs.business.concretes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Kodlama.io.Devs.kodlamaIoDevs.business.abstracts.LanguageService;
+import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.CreateLanguageRequest;
+import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetAllLanguagesResponse;
+import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetByIdLanguageResponse;
 import Kodlama.io.Devs.kodlamaIoDevs.dataAccess.abstracts.LanguageRepository;
 import Kodlama.io.Devs.kodlamaIoDevs.entities.concretes.Language;
 
@@ -20,44 +25,62 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public List<Language> getAll() {
-		return languageRepository.getAll();
-	}
-
-	@Override
-	public Language getById(int id) {
-		return languageRepository.getById(id);
-	}
-
-	@Override
-	public void add(Language language) throws Exception {
-		List<Language> languages = getAll();
+	public List<GetAllLanguagesResponse> getAll() {
+		List<Language> languages = languageRepository.findAll();
+		List<GetAllLanguagesResponse> languageResponse = new ArrayList<GetAllLanguagesResponse>();
 		
-		for (Language lang : languages) {
-			if(lang.getName() == language.getName()) {
-				throw new Exception("Language name cannot be preveious name");
-			}
+		for (Language language : languages) {
+			GetAllLanguagesResponse responseItem = new GetAllLanguagesResponse();
+			responseItem.setId(language.getId());
+			responseItem.setName(language.getName());
+			responseItem.setTechnologies(language.getTechnologies());
+			
+			languageResponse.add(responseItem);
 		}
 		
-		if(language.getName().isEmpty()) {
-			throw new Exception("Language name cannot be preveious name");	
-		}
+		return languageResponse;
+	}
+
+	@Override
+	public GetByIdLanguageResponse getById(int id) {
+		GetByIdLanguageResponse response = new GetByIdLanguageResponse();
+		Language language = languageRepository.getReferenceById(id);
 		
+		response.setId(language.getId());
+		response.setName(language.getName());
+		response.setTechnologies(language.getTechnologies());
 		
-		languageRepository.add(language);
+		return response;
+	}
+
+	@Override
+	public void add(CreateLanguageRequest languageRequest) throws Exception {
+		Language language = new Language();
+		language.setName(languageRequest.getName());
+		
+		this.languageRepository.save(language);
 		
 	}
 
 	@Override
-	public void update(int id, Language language) {
-		languageRepository.update(id, language);
+	public void update(int id, UpdateLanguageRequest updateRequest) {
+		Language updatedLanguage = languageRepository.getReferenceById(id);
+		updatedLanguage.setName(updateRequest.getName());
+		
+		this.languageRepository.save(updatedLanguage);
+		
 		
 	}
 
 	@Override
 	public void delete(int id) {
-		languageRepository.delete(id);
+		languageRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public Language getLanguageById(int id) {
+		return languageRepository.getReferenceById(id);
 	}
 
 }

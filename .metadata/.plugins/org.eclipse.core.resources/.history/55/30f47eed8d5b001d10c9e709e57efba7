@@ -1,0 +1,15 @@
+package Kodlama.io.Devs.kodlamaIoDevs.business.abstracts;
+
+import java.util.List;
+
+import Kodlama.io.Devs.kodlamaIoDevs.entities.concretes.Technology;
+
+
+
+public interface TechnologyService {
+	List<Technology> getAll();
+	Technology getById(int id);
+	void add(Technology language) throws Exception;
+	void update(int id, Technology language);
+	void delete(int id);
+}
