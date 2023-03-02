@@ -1,0 +1,5 @@
+package Kodlama.io.Devs.kodlamaIoDevs.core.utilities.exceptions;
+
+public class ProblemDetails {
+
+}

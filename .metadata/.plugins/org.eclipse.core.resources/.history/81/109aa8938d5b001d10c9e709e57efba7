@@ -1,5 +1,0 @@
-package Kodlama.io.Devs.kodlamaIoDevs.business.responses.language;
-
-public class GetAllTechnologiesResponse {
-
-}

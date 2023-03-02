@@ -1,0 +1,59 @@
+package Kodlama.io.Devs.kodlamaIoDevs;
+
+import java.util.HashMap;
+
+import javax.validation.UnexpectedTypeException;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import Kodlama.io.Devs.kodlamaIoDevs.core.utilities.exceptions.BusinessException;
+import Kodlama.io.Devs.kodlamaIoDevs.core.utilities.exceptions.ProblemDetails;
+import Kodlama.io.Devs.kodlamaIoDevs.core.utilities.exceptions.ValidationProblemDetails;
+
+@SpringBootApplication
+@RestControllerAdvice
+public class KodlamaIoDevsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(KodlamaIoDevsApplication.class, args);
+	}
+	
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ProblemDetails handleBusinessException(BusinessException exception) {
+		ProblemDetails details = new ProblemDetails();
+		details.setMessage(exception.getMessage());
+		
+		return details;
+	}
+	
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ValidationProblemDetails handleValidationException(UnexpectedTypeException exception) {
+		ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails();
+		validationProblemDetails.setMessage("VALIDATION.EXCEPTION");
+		
+		
+//		for (FieldError fieldError : exception.get) {
+//			
+//		}
+		
+		validationProblemDetails.setValidationErrors(new HashMap<String, String>());
+		
+		return validationProblemDetails;
+	}
+	
+	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
+	}
+
+
+}

@@ -2,14 +2,15 @@ package Kodlama.io.Devs.kodlamaIoDevs.webApi.contollers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import Kodlama.io.Devs.kodlamaIoDevs.business.abstracts.LanguageService;
@@ -17,40 +18,38 @@ import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.CreateLanguageRe
 import Kodlama.io.Devs.kodlamaIoDevs.business.requests.language.UpdateLanguageRequest;
 import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetAllLanguagesResponse;
 import Kodlama.io.Devs.kodlamaIoDevs.business.responses.language.GetByIdLanguageResponse;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/languages")
+@AllArgsConstructor
 public class LanguageController {
 
 	private LanguageService languageService;
-
-	@Autowired
-	public LanguageController(LanguageService languageService) {
-		this.languageService = languageService;
-	}
 	
-	@GetMapping("/getall")
-	public List<GetAllLanguagesResponse> getAll(){
+	@GetMapping()
+	public List<GetAllLanguagesResponse> getAll() throws Exception {
 		return languageService.getAll();
 	}
 	
-	@GetMapping("/getbyid")
-	public GetByIdLanguageResponse getById(@RequestParam int id) {
+	@GetMapping("/{id}")
+	public GetByIdLanguageResponse getById(@PathVariable int id) {
 		return languageService.getById(id);
 	}
 	
-	@PostMapping("/add")
-	public void add(CreateLanguageRequest language) throws Exception {
+	@PostMapping()
+	@ResponseStatus(code=HttpStatus.CREATED)
+	public void add(@RequestBody CreateLanguageRequest language) throws Exception {
 		languageService.add(language);
 	}
 	
-	@PutMapping("/update")
-	public void update(@RequestParam int id , @RequestBody UpdateLanguageRequest language) {
-		languageService.update(id, language);
+	@PutMapping()
+	public void update(@RequestBody UpdateLanguageRequest language) {
+		languageService.update(language);
 	}
 	
-	@DeleteMapping("/delete")
-	public void delete(@RequestParam int id) {
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable int id) {
 		languageService.delete(id);
 	}
 	

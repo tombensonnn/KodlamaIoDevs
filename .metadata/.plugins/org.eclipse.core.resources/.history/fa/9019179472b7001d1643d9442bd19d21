@@ -1,0 +1,9 @@
+package Kodlama.io.Devs.kodlamaIoDevs.business.requests.technology;
+
+import lombok.Data;
+
+@Data
+public class CreateTechnologyRequest {
+	private String name;
+	private int languageId;
+}
